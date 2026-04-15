@@ -13,8 +13,24 @@ def connect():
         host=os.environ.get('DBHOST')
     )
 
-def create():
-    pass
+def create(table, data):
+    ph = []
+    keys = []
+    vals = ()
+    for key in data:
+        keys.append(key)
+        ph.append("%s")
+        vals = vals + (data[key],)
+
+    query = f"INSERT INTO ece.{table} ({', '.join(keys)}) VALUES ({', '.join(ph)}) RETURNING *"
+    conn = connect()
+    cur = conn.cursor(cursor_factory=RealDictCursor)
+
+    cur.execute(query, vals)
+    res = cur.fetchone()
+    conn.commit()
+
+    return res
 
 def read(table, id = None):
     query = f"SELECT * FROM ece.{table} "
