@@ -17,6 +17,7 @@ def create(table, data):
     ph = []
     keys = []
     vals = ()
+    print(data)
     for key in data:
         keys.append(key)
         ph.append("%s")

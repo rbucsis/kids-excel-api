@@ -33,8 +33,6 @@ def get_student(id: str):
 @app.post("/students")
 def post_student(req: models.PostStudent):
     student = req.model_dump()
-
-
     student['org_id'] = '67570c78-dcf1-40b3-860f-7539d98b4be8' ## FOR DEVELOPMENT ONLY DO NOT COMMIT TO GIT WITH THIS
     res = pg.create("students", student)
     print(res)
